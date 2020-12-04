@@ -3,21 +3,22 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fethchStreams } from '../../actions';
 
+
 class StreamList extends React.Component{
     componentDidMount(){
         this.props.fethchStreams();
     }
 
-    renderControl(stream){
+    renderStreamControl(stream){
         if(this.props.loggedinUerId === stream.userId){
             return(
                 <div className="right floated content">
-                    <button className="ui button basic primary">
+                    <Link to={`/streams/edit/${stream.id}`} className="ui button basic primary">
                         Edit
-                    </button>
-                    <button className="ui button basic negative">
+                    </Link>
+                    <Link to={`/streams/delete/${stream.id}`} className="ui button basic negative">
                         Delete
-                    </button>
+                    </Link>
                 </div>
             );
         };
@@ -37,7 +38,7 @@ class StreamList extends React.Component{
         return this.props.streams.map(stream => {
             return(
                 <div className="item" key={stream.id}>
-                    { this.renderControl(stream) } 
+                    { this.renderStreamControl(stream) } 
                     <i className="large middle aligned icon camera"/>
                     <div className="content">
                         {stream.title}
